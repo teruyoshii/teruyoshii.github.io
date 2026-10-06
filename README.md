@@ -22,8 +22,8 @@ npm run build    # 型チェックしてから dist/ に出力
 
 ## 構成
 
-- `src/pages/index.astro` … トップ。VHS カセット風のデッキ表示
-- `src/scripts/deck.ts` … スクロールに合わせてリール回転・テープ巻き取り・パネル送りをする GSAP の処理
+- `src/pages/index.astro` … トップ。画像と説明のペアを左右のリールに載せて回すデッキ表示
+- `src/scripts/deck.ts` … スクロールに合わせてリールを回し、円周上のカード位置・テープ巻き取りを計算する GSAP の処理
 - `src/components/Reel.astro` … リールの SVG
 - スマホ幅や「視差効果を減らす」設定のときは、デッキ表示をやめて縦に並べる
 
