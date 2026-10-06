@@ -1,0 +1,59 @@
+---
+import { render } from 'astro:content';
+import ProseLayout from '../../layouts/ProseLayout.astro';
+import { getWorks, formatDate } from '../../lib/works';
+
+export async function getStaticPaths() {
+  const works = await getWorks();
+  return works.map((work) => ({ params: { id: work.id }, props: { work } }));
+}
+
+const { work } = Astro.props;
+const { Content } = await render(work);
+const { data } = work;
+---
+
+<ProseLayout title={data.title} description={data.summary} eyebrow={`${data.kind} · ${formatDate(data.date)}`} back={{ href: '/works/', label: 'Works' }}>
+  {
+    data.youtube ? (
+      <div class="media">
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${data.youtube}`}
+          title={data.title}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        />
+      </div>
+    ) : data.video ? (
+      <div class="media">
+        <video src={data.video} controls playsinline preload="metadata" />
+      </div>
+    ) : data.image ? (
+      <img class="media" src={data.image} alt={data.title} />
+    ) : null
+  }
+  <p class="summary">{data.summary}</p>
+  <div class="prose">
+    <Content />
+  </div>
+</ProseLayout>
+
+<style>
+  .media {
+    margin: 0 0 2em;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--c-shell);
+  }
+  .media :is(iframe, video) {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+  }
+  .summary {
+    margin: 0 0 2em;
+    font-size: 1.15rem;
+    color: var(--c-muted);
+  }
+</style>

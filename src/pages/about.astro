@@ -1,25 +1,23 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import { getEntry, render } from 'astro:content';
+import ProseLayout from '../layouts/ProseLayout.astro';
 
-const pageTitle = "私について";
-const skills = ["AviUtl", "C#", "LaTeX"];
-
-const skillColor = "red";
-const fontWeight = "bold";
-const textCase = "";
+const about = await getEntry('profile', 'about');
+if (!about) throw new Error('src/content/profile/about.md がありません');
+const { Content } = await render(about);
 ---
 
-<style define:vars={{ skillColor, fontWeight, textCase }}>
-  .skill {
-    color: var(--skillColor);
-    font-weight: var(--fontWeight);
-    text-transform: var(--textCase);
+<ProseLayout title={about.data.title} description={about.data.summary} eyebrow="Profile">
+  <p class="lead">{about.data.summary}</p>
+  <div class="prose">
+    <Content />
+  </div>
+</ProseLayout>
+
+<style>
+  .lead {
+    margin: 0 0 2em;
+    font-size: 1.15rem;
+    color: var(--c-muted);
   }
 </style>
-<BaseLayout pageTitle={pageTitle}>
-  <p>これはAstroのチュートリアル用のページです。</p>
-  <p>my skills:</p>
-  <ul>
-    {skills.map((skill) => <li class="skill">{skill}</li>)}
-  </ul>
-</BaseLayout>

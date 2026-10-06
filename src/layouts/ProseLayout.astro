@@ -1,0 +1,65 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Reel from '../components/Reel.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  eyebrow?: string;
+  back?: { href: string; label: string };
+}
+
+const { title, description, eyebrow, back = { href: '/', label: 'Home' } } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="top">
+    <a class="brand" href="/">
+      <Reel size="small" />
+      <span class="mono">{site.name}</span>
+    </a>
+    <a class="back mono" href={back.href}>◀◀ {back.label}</a>
+  </header>
+  <main class="page">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{title}</h1>
+    <slot />
+  </main>
+</BaseLayout>
+
+<style>
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px var(--gutter);
+    border-bottom: 1px solid var(--c-line);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .back {
+    font-size: 0.8rem;
+    color: var(--c-muted);
+    text-decoration: none;
+  }
+  .back:hover {
+    color: var(--c-ink);
+  }
+  .page {
+    width: min(100% - 2 * var(--gutter), 760px);
+    margin: 0 auto;
+    padding: clamp(40px, 8vw, 96px) 0 120px;
+  }
+  h1 {
+    margin: 0 0 1em;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+import ProseLayout from '../../layouts/ProseLayout.astro';
+import WorkThumb from '../../components/WorkThumb.astro';
+import { getWorks, formatDate } from '../../lib/works';
+
+const works = await getWorks();
+---
+
+<ProseLayout title="制作物" eyebrow="Works">
+  <ul class="list">
+    {
+      works.map((work) => (
+        <li>
+          <a href={`/works/${work.id}/`}>
+            <WorkThumb work={work} />
+            <span class="title">{work.data.title}</span>
+            <span class="summary">{work.data.summary}</span>
+            <span class="date mono">{formatDate(work.data.date)}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</ProseLayout>
+
+<style>
+  .list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+    gap: 32px 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  a {
+    display: grid;
+    gap: 6px;
+    text-decoration: none;
+  }
+  .title {
+    font-weight: 600;
+  }
+  a:hover .title {
+    color: var(--c-accent);
+  }
+  .summary {
+    font-size: 0.85rem;
+    color: var(--c-muted);
+  }
+  .date {
+    font-size: 0.7rem;
+    color: var(--c-muted);
+  }
+</style>
