@@ -1,0 +1,71 @@
+---
+// カセットのリール。テープの巻き量（tape の r）と回転はスクリプトから動かす
+interface Props {
+  side?: 'left' | 'right';
+  size?: 'large' | 'small';
+  tape?: number;
+}
+
+const { side, size = 'large', tape = 66 } = Astro.props;
+const spokes = [0, 60, 120, 180, 240, 300];
+---
+
+<svg
+  class:list={['reel', `reel--${size}`]}
+  data-reel={side}
+  viewBox="0 0 200 200"
+  aria-hidden="true"
+>
+  <circle class="reel__flange" cx="100" cy="100" r="97" />
+  <circle class="reel__tape" data-tape cx="100" cy="100" r={tape} />
+  <g class="reel__spin" data-spin>
+    <circle class="reel__hub" cx="100" cy="100" r="34" />
+    {spokes.map((deg) => <rect class="reel__spoke" x="96" y="66" width="8" height="16" rx="2" transform={`rotate(${deg} 100 100)`} />)}
+    <circle class="reel__axle" cx="100" cy="100" r="14" />
+    <rect class="reel__mark" x="98" y="40" width="4" height="22" rx="2" />
+  </g>
+</svg>
+
+<style>
+  .reel {
+    display: block;
+    flex: none;
+  }
+  .reel--small {
+    width: 28px;
+    height: 28px;
+  }
+  .reel__flange {
+    fill: rgb(255 255 255 / 0.02);
+    stroke: var(--c-line);
+    stroke-width: 2;
+  }
+  .reel__tape {
+    fill: var(--c-tape);
+    stroke: rgb(183 148 255 / 0.18);
+    stroke-width: 1;
+  }
+  .reel__hub {
+    fill: var(--c-brand);
+    stroke: var(--c-accent);
+    stroke-width: 2;
+  }
+  .reel__spoke,
+  .reel__mark {
+    fill: var(--c-ink);
+  }
+  .reel__mark {
+    opacity: 0.35;
+  }
+  .reel__axle {
+    fill: var(--c-bg);
+  }
+  .reel--small .reel__flange {
+    stroke: var(--c-accent);
+    stroke-width: 10;
+  }
+  .reel--small .reel__tape,
+  .reel--small .reel__mark {
+    display: none;
+  }
+</style>

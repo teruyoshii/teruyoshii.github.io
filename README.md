@@ -1,47 +1,32 @@
-# Astro Starter Kit: Minimal
+# teruyoshii.github.io
+
+てるよしのポートフォリオサイト。Astro + TypeScript + GSAP で作り、GitHub Pages で公開します。
+
+## 開発
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # 型チェックしてから dist/ に出力
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## 更新のしかた
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+| 何を | どこを |
+| --- | --- |
+| 制作物を追加 | `src/content/works/` に `.md` を1つ追加（書き方はサンプル参照） |
+| 動画・画像ファイル | `public/works/` に置き、md の `video` / `image` にパスを書く |
+| About の文章 | `src/content/profile/about.md` |
+| 名前・ブログ・SNS のリンク | `src/data/site.ts`（note / Zenn の RSS を書くと最新記事を自動表示） |
+| 色・フォント | `src/styles/tokens.css` |
 
-## 🚀 Project Structure
+## 構成
 
-Inside of your Astro project, you'll see the following folders and files:
+- `src/pages/index.astro` … トップ。VHS カセット風のデッキ表示
+- `src/scripts/deck.ts` … スクロールに合わせてリール回転・テープ巻き取り・パネル送りをする GSAP の処理
+- `src/components/Reel.astro` … リールの SVG
+- スマホ幅や「視差効果を減らす」設定のときは、デッキ表示をやめて縦に並べる
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## 公開
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+`master` に push すると GitHub Actions（`.github/workflows/deploy.yml`）が GitHub Pages に公開します。

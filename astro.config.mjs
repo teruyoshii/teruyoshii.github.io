@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
+// teruyoshii.github.io のルートで公開する（リポジトリ名を teruyoshii.github.io に変更する前提）
 export default defineConfig({
-  site: "https://preeminent-cannoli-b94c67.netlify.app/"
+  site: 'https://teruyoshii.github.io',
 });
